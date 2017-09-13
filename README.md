@@ -8,9 +8,19 @@ make a GPX overlayerd map from multiple GPXs
 
 ![](doc/image002.jpg)
 
+##### Change Color
+
+```sh
+bin/overlay.py -c green --line-alpha 0.2
+```
+
 ![](doc/image003.jpg)
 
-![](doc/image004.jpg)
+```sh
+bin/overlay.py -c red --line-alpha 0.2
+```
+
+![](doc/image005.jpg)
 
 ## Usage
 
