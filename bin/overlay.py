@@ -47,6 +47,15 @@ def buildMap():
     osm = folium.Map(location=options.location,
                      zoom_start=options.zoom, tiles=options.tiles)
 
+    folium.TileLayer('cartodbdark_matter').add_to(osm)
+    folium.TileLayer('cartodbpositron').add_to(osm)
+    folium.TileLayer('openstreetmap').add_to(osm)
+    folium.LayerControl().add_to(osm)
+
+    # need API key
+    # folium.TileLayer('cloudmade').add_to(osm)
+    # folium.TileLayer('mapbox').add_to(osm)
+
     gpxes = glob.glob(options.activities)
     if not gpxes:
         raise 'GPX activities not found in' + options.activities
