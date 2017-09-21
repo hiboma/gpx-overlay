@@ -85,7 +85,7 @@ $ open heatmap.html
 ##### Change Style
 
 ```sh
-$ bin/heatmap.py
+$ bin/heatmap.py --gradient '{ "0.4":"blue","0.65":"red","1":"white" }' --radius 2 --blur 1
 $ open heatmap.html
 ```
 
