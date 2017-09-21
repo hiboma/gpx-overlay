@@ -2,13 +2,13 @@
 
 make a GPX overlayerd map from multiple GPXs
 
-## Sample
+## overlay.py
 
 ![](doc/image001.jpg)
 
 ![](doc/image002.jpg)
 
-##### Change Color
+##### Change Style
 
 ```sh
 bin/overlay.py -c green --line-alpha 0.2
@@ -22,7 +22,7 @@ bin/overlay.py -c red --line-alpha 0.2
 
 ![](doc/image005.jpg)
 
-## Usage
+#### Usage
 
 ```
 Usage: overlay.py [options]
@@ -69,6 +69,53 @@ $ open overlay.html
 ```
 $ bin/overlay.py -t cartodbpositron -c green --line-alpha 0.2
 $ open overlay.html
+```
+
+## heatmap.py
+
+```sh
+$ bin/heatmap.py
+$ open heatmap.html
+```
+
+![](doc/heatmap001.jpg)
+
+![](doc/heatmap002.jpg)
+
+##### Change Style
+
+```sh
+$ bin/heatmap.py
+$ open heatmap.html
+```
+
+![](doc/heatmap003.jpg)
+
+![](doc/heatmap004.jpg)
+
+![](doc/heatmap005.jpg)
+
+#### Usage
+
+```
+Usage: heatmap.py [options]
+
+Options:
+  -h, --help            show this help message and exit
+  -d ACTIVITIES, --activities-dir=ACTIVITIES
+                        path to directory contains GPX activities
+  -z ZOOM, --zoom=ZOOM  specify map zoom level
+  -o OUTPUT, --output=OUTPUT
+                        path to HTML output
+  -t TILES, --tile=TILES
+                        tile server
+  -b BLUR, --blur=BLUR  specify heatmap blur
+  -r RADIUS, --radius=RADIUS
+                        specify heatmap radius
+  -g GRADIENT, --gradient=GRADIENT
+                        specify heatmap color gradient
+  -l LOCATION, --location=LOCATION
+                        central point (latitude, longitude) of the map
 ```
 
 ## Requirements
