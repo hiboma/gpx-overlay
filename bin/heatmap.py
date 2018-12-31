@@ -16,6 +16,12 @@ from folium import plugins
 
 logging.basicConfig(level=logging.INFO)
 
+def tsv2pickle(source, dest):
+    df = pd.read_table(source)
+    df.to_pickle(dest)
+
+    return df
+
 def gpx2pickle(source, dest):
 
     locations = []
@@ -54,22 +60,27 @@ def buildMap():
     osm = folium.Map(location=options.location,
                      zoom_start=options.zoom, tiles=options.tiles)
 
-    gpxes = glob.glob(options.activities)
-    if not gpxes:
+    files = glob.glob(options.activities)
+    if not files:
         raise 'GPX activities not found in' + options.activities
 
     logging.info('converting gpx to pickle ...')
 
     records = pd.DataFrame([])
-    for gpx in gpxes:
-        pick = gpx.replace('activities', 'tmp') + '.pickle'
+    for file in files:
+        pick = file.replace('activities', 'tmp') + '.pickle'
 
         if not os.path.exists(pick):
-            df = gpx2pickle(gpx, pick)
+            if '.gpx' in file:
+                df = tsv2pickle(file, pick)
+            elif '.tsv' in file:
+                df = tsv2pickle(file, pick)
+            else:
+                raise 'unknown format'
         else:
             df = pd.read_pickle(pick)
 
-        logging.info(pick)
+        logging.info("processing: " + pick)
         records = records.append(df)
 
     heatmap_style = {

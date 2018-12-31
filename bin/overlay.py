@@ -13,6 +13,12 @@ import pandas as pd
 
 logging.basicConfig(level=logging.INFO)
 
+def tsv2pickle(source, dest):
+    df = pd.read_table(source)
+    df.to_pickle(dest)
+
+    return df
+
 def gpx2pickle(source, dest):
 
     locations = []
@@ -56,20 +62,28 @@ def buildMap():
     # folium.TileLayer('cloudmade').add_to(osm)
     # folium.TileLayer('mapbox').add_to(osm)
 
-    gpxes = glob.glob(options.activities)
-    if not gpxes:
+    files = glob.glob(options.activities)
+    if not files:
         raise 'GPX activities not found in' + options.activities
 
     logging.info('converting gpx to pickle ...')
-    for gpx in gpxes:
-        pick = gpx.replace('activities', 'tmp') + '.pickle'
+    for file in files:
+        pick = file.replace('activities', 'tmp') + '.pickle'
 
         if not os.path.exists(pick):
-            df = gpx2pickle(gpx, pick)
+            if '.gpx' in file:
+                df = tsv2pickle(file, pick)
+            elif '.tsv' in file:
+                if os.path.getsize(file) == 0:
+                    continue
+
+                df = tsv2pickle(file, pick)
+            else:
+                raise 'unknown format'
         else:
             df = pd.read_pickle(pick)
 
-        logging.info(pick)
+        logging.info("processing: " + pick)
         drawPolyLines(osm, df)
 
     osm.save(options.output)
